@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/teamListFragment">
+
+    <fragment
+        android:id="@+id/teamListFragment"
+        android:name="capatan.kurt.nbateamviewer.ui.team_list.TeamListFragment"
+        android:label="NBA Standings"
+        tools:layout="@layout/fragment_team_list">
+        <action
+            android:id="@+id/action_teamListFragment_to_teamDetailsFragment"
+            app:destination="@id/teamDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/teamDetailsFragment"
+        android:name="capatan.kurt.nbateamviewer.ui.team_details.TeamDetailsFragment"
+        android:label="{teamName}"
+        tools:layout="@layout/fragment_team_details">
+        <argument
+            android:name="team"
+            app:argType="capatan.kurt.nbateamviewer.datasource.Team" />
+        <argument
+            android:name="teamName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
