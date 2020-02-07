@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">NBA Team Viewer</string>
+    <string name="item_team_loss">Loss</string>
+    <string name="item_team_win">Win</string>
+    <string name="sort_by_name_a_z">Sort by name (A-Z)</string>
+    <string name="sort_by_name_z_a">Sort by name (Z-A)</string>
+    <string name="sort_by_wins_low_high">Sort by wins (Low-High)</string>
+    <string name="sort_by_wins_high_low">Sort by wins (High-Low)</string>
+    <string name="sort_by_losses_low_high">Sort by losses (Low-high)</string>
+    <string name="sort_by_losses_high_low">Sort by losses (High-Low)</string>
 </resources>
