@@ -1,10 +1,7 @@
 package capatan.kurt.nbateamviewer.repository
 
-import capatan.kurt.nbateamviewer.datasource.Team
+import capatan.kurt.nbateamviewer.core.*
 import capatan.kurt.nbateamviewer.datasource.TeamService
-import capatan.kurt.nbateamviewer.generatePlayers
-import capatan.kurt.nbateamviewer.randomInt
-import capatan.kurt.nbateamviewer.randomString
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -17,34 +14,6 @@ import org.hamcrest.Matchers.*
 
 class TeamRepositoryTest {
 
-    private val bostonCeltics = Team(
-        randomInt(), "Boston Celtics", 26, 24,
-        generatePlayers()
-    )
-    private val denverNuggets = Team(
-        randomInt(), "Denver Nuggets", 36, 14,
-        generatePlayers()
-    )
-    private val losAngelesLakers = Team(
-        randomInt(), "Los Angeles Lakers", 41, 8,
-        generatePlayers()
-    )
-    private val newYorkKnicks = Team(
-        randomInt(), "New York Knicks", 12, 38,
-        generatePlayers()
-    )
-    private val oklahomaCityThunders = Team(
-        randomInt(), "Oklahoma City Thunders", 30, 20,
-        generatePlayers()
-    )
-    private val sanAntonioSpurs = Team(
-        randomInt(), "San Antonio Spurs", 25, 25,
-        generatePlayers()
-    )
-
-    private val nbaTeams = listOf(bostonCeltics, denverNuggets, losAngelesLakers,
-        newYorkKnicks, oklahomaCityThunders, sanAntonioSpurs)
-
     private lateinit var teamService: TeamService
     private lateinit var teamRepository: TeamRepository
 
@@ -56,13 +25,13 @@ class TeamRepositoryTest {
 
     @Test
     fun getNbaTeams_returns_nbaTeams() {
-        coEvery { teamService.getTeams() } returns nbaTeams
+        coEvery { teamService.getTeams() } returns NBA_TEAMS
 
         val result = runBlocking { teamRepository.getNbaTeams() }
 
         coVerify { teamService.getTeams() }
 
-        assertEquals(result, nbaTeams)
+        assertEquals(result, NBA_TEAMS)
     }
 
     @Test(expected = Exception::class)
@@ -79,85 +48,85 @@ class TeamRepositoryTest {
 
     @Test
     fun sortTeamsByName_ascending() {
-        val result = runBlocking { teamRepository.sortTeamsByName(true, nbaTeams) }
+        val result = teamRepository.sortTeamsByName(true, NBA_TEAMS)
 
         assertThat (result, contains(
-            bostonCeltics,
-            denverNuggets,
-            losAngelesLakers,
-            newYorkKnicks,
-            oklahomaCityThunders,
-            sanAntonioSpurs)
+            BOSTON_CELTICS,
+            DENVER_NUGGETS,
+            LOS_ANGELES_LAKERS,
+            NEW_YORK_KNICKS,
+            OKLAHOMA_CITY_THUNDERS,
+            SAN_ANTONIO_SPURS)
         )
     }
 
     @Test
     fun sortTeamsByName_descending() {
-        val result = runBlocking { teamRepository.sortTeamsByName(false, nbaTeams) }
+        val result = teamRepository.sortTeamsByName(false, NBA_TEAMS)
 
         assertThat (result, contains(
-            sanAntonioSpurs,
-            oklahomaCityThunders,
-            newYorkKnicks,
-            losAngelesLakers,
-            denverNuggets,
-            bostonCeltics)
+            SAN_ANTONIO_SPURS,
+            OKLAHOMA_CITY_THUNDERS,
+            NEW_YORK_KNICKS,
+            LOS_ANGELES_LAKERS,
+            DENVER_NUGGETS,
+            BOSTON_CELTICS)
         )
     }
 
     @Test
     fun sortTeamsByWins_ascending() {
-        val result = runBlocking { teamRepository.sortTeamsByWins(true, nbaTeams) }
+        val result = teamRepository.sortTeamsByWins(true, NBA_TEAMS)
 
         assertThat (result, contains(
-            newYorkKnicks,
-            sanAntonioSpurs,
-            bostonCeltics,
-            oklahomaCityThunders,
-            denverNuggets,
-            losAngelesLakers)
+            NEW_YORK_KNICKS,
+            SAN_ANTONIO_SPURS,
+            BOSTON_CELTICS,
+            OKLAHOMA_CITY_THUNDERS,
+            DENVER_NUGGETS,
+            LOS_ANGELES_LAKERS)
         )
     }
 
     @Test
     fun sortTeamsByWins_descending() {
-        val result = runBlocking { teamRepository.sortTeamsByWins(false, nbaTeams) }
+        val result = teamRepository.sortTeamsByWins(false, NBA_TEAMS)
 
         assertThat (result, contains(
-            losAngelesLakers,
-            denverNuggets,
-            oklahomaCityThunders,
-            bostonCeltics,
-            sanAntonioSpurs,
-            newYorkKnicks)
+            LOS_ANGELES_LAKERS,
+            DENVER_NUGGETS,
+            OKLAHOMA_CITY_THUNDERS,
+            BOSTON_CELTICS,
+            SAN_ANTONIO_SPURS,
+            NEW_YORK_KNICKS)
         )
     }
 
     @Test
     fun sortTeamsByLosses_ascending() {
-        val result = runBlocking { teamRepository.sortTeamsByLosses(true, nbaTeams) }
+        val result = teamRepository.sortTeamsByLosses(true, NBA_TEAMS)
 
         assertThat (result, contains(
-            losAngelesLakers,
-            denverNuggets,
-            oklahomaCityThunders,
-            bostonCeltics,
-            sanAntonioSpurs,
-            newYorkKnicks)
+            LOS_ANGELES_LAKERS,
+            DENVER_NUGGETS,
+            OKLAHOMA_CITY_THUNDERS,
+            BOSTON_CELTICS,
+            SAN_ANTONIO_SPURS,
+            NEW_YORK_KNICKS)
         )
     }
 
     @Test
     fun sortTeamsByLosses_descending() {
-        val result = runBlocking { teamRepository.sortTeamsByLosses(false, nbaTeams) }
+        val result = teamRepository.sortTeamsByLosses(false, NBA_TEAMS)
 
         assertThat (result, contains(
-            newYorkKnicks,
-            sanAntonioSpurs,
-            bostonCeltics,
-            oklahomaCityThunders,
-            denverNuggets,
-            losAngelesLakers)
+            NEW_YORK_KNICKS,
+            SAN_ANTONIO_SPURS,
+            BOSTON_CELTICS,
+            OKLAHOMA_CITY_THUNDERS,
+            DENVER_NUGGETS,
+            LOS_ANGELES_LAKERS)
         )
     }
 }
